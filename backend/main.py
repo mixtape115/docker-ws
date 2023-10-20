@@ -5,7 +5,9 @@ from typing import List
 
 app = FastAPI()
 
-
+# FastAPIアプリケーションでWebSocket通信を処理するための設定とクラス
+# どのオリジンからでもリクエストを受け付ける
+# allow_origins、allow_credentials、allow_methods、およびallow_headersはCORSポリシーの設定を指定
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,6 +16,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+# WebSocket接続を管理するためのユーティリティクラス
+# WebSocket接続をリストで追跡し、新しい接続を受け入れ、既存の接続を切断し、メッセージを送信したり、全ての接続にブロードキャストしたりする
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
